@@ -19,3 +19,13 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+
+.hybridly
+_ide_helper*
+.phpstorm.meta.php
+.hybridly
+_ide_helper*
+.phpstorm.meta.php
+.hybridly
+_ide_helper*
+.phpstorm.meta.php
