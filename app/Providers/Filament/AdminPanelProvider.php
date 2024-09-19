@@ -2,11 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\ProjectResource\Pages\MyProjects;
+use App\Filament\Resources\TimeLogResource\Pages\MyTimeLogs;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
+use Filament\Navigation\NavigationItem;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
@@ -28,7 +31,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
+                'gray' => Color::Slate,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -53,6 +57,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('my')
+                    ->label(fn(): string => MyProjects::getNavigationLabel())
+                    ->icon('heroicon-o-rectangle-stack')
+                    ->url(fn(): string => MyProjects::getUrl())
+                    ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.projects.my')),
+                NavigationItem::make('my')
+                    ->label(fn(): string => MyTimeLogs::getNavigationLabel())
+                    ->icon('heroicon-o-clock')
+                    ->url(fn(): string => MyTimeLogs::getUrl())
+                    ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.time-logs.my'))
             ]);
     }
 }
