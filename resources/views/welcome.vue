@@ -12,7 +12,7 @@ defineProps<{
     laravelVersion: string
 }>()
 
-const user = useProperty('security.user')
+const user = useProperty('auth.user')
 </script>
 
 <template>

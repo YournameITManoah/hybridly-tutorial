@@ -3,7 +3,7 @@ defineOptions({ name: 'DashboardPage' })
 
 useHead({ title: 'Dashboard' })
 
-const user = useProperty('security.user')
+const user = useProperty('auth.user')
 
 const breadcrumbs = [
     {

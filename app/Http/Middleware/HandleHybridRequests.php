@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Data\SecurityData;
+use App\Data\AuthData;
 use App\Data\SharedData;
 use App\Data\UserData;
+use App\Models\User;
 use Hybridly\Http\Middleware;
 
 class HandleHybridRequests extends Middleware
@@ -14,9 +15,19 @@ class HandleHybridRequests extends Middleware
      */
     public function share(): SharedData
     {
+        $user = auth()->user();
+        $can = null;
+
+        if ($user !== null) {
+            $can = [
+                'view-admin' => $user->can('view-admin', User::class)
+            ];
+        }
+
         return SharedData::from([
-            'security' => SecurityData::from([
-                'user' => UserData::optional(auth()->user()),
+            'auth' => AuthData::from([
+                'user' => UserData::optional($user),
+                'can' => $can
             ]),
         ]);
     }
