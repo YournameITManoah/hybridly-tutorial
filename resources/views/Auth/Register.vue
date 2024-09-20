@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import type { VFormRef } from '~/resources/types/vuetify'
+
 defineOptions({ name: 'RegisterPage' })
 
 useHead({ title: 'Register' })
 
 defineProps<{
-    canResetPassword?: boolean
     status?: string | null
 }>()
 
@@ -16,13 +17,27 @@ const form = useForm({
         password_confirmation: '',
     },
 })
+
+const formRef = ref<VFormRef | null>(null)
+const submit = async () => {
+    const result = await formRef.value?.validate()
+    if (!result?.valid) return
+    form.submit()
+}
 </script>
 <template layout="guest">
     <div>
         <v-card-title>Register</v-card-title>
-        <v-form :disabled="form.processing" @submit.prevent="form.submit">
+        <v-form
+            ref="formRef"
+            :disabled="form.processing"
+            @submit.prevent="submit"
+        >
             <v-container>
                 <v-row>
+                    <v-col v-if="status" cols="12">
+                        <v-alert :text="status" />
+                    </v-col>
                     <v-col cols="12">
                         <v-text-field
                             v-model="form.fields.name"
@@ -30,6 +45,7 @@ const form = useForm({
                             label="Name"
                             prepend-inner-icon="mdi-account"
                             type="text"
+                            :rules="[isRequired]"
                         />
                     </v-col>
                     <v-col cols="12">

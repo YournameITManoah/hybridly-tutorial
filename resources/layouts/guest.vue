@@ -6,9 +6,9 @@ defineOptions({ name: 'GuestLayout' })
 
 <template>
     <app-layout>
-        <v-container fluid>
-            <v-row align="center" justify="center" style="height: 100vh">
-                <v-col cols="12" sm="8" md="6" lg="4">
+        <v-container class="fill-height">
+            <v-row align="center" justify="center">
+                <v-col cols="12" sm="10" md="6" lg="4">
                     <div class="d-flex justify-center">
                         <router-link href="/">
                             <ApplicationLogo style="height: 75px" />

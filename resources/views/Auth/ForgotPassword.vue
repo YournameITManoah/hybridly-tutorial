@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { VFormRef } from '~/resources/types/vuetify'
+
 useHead({ title: 'Forgot Password' })
 
 defineProps<{
@@ -10,16 +12,27 @@ const form = useForm({
         email: '',
     },
 })
+
+const formRef = ref<VFormRef | null>(null)
+const submit = async () => {
+    const result = await formRef.value?.validate()
+    if (!result?.valid) return
+    form.submit()
+}
 </script>
 
 <template layout="guest">
     <div>
         <v-card-title>Forgot Password</v-card-title>
-        <v-form :disabled="form.processing" @submit.prevent="form.submit">
+        <v-form
+            ref="formRef"
+            :disabled="form.processing"
+            @submit.prevent="submit"
+        >
             <v-container>
                 <v-row>
                     <v-col class="py-0" cols="12">
-                        <div class="text-subtitle-2 text-medium-emphasis mb-4">
+                        <div class="text-subtitle-2 text-medium-emphasis">
                             Forgot your password? No problem. Just let us know
                             your email address and we will email you a password
                             reset link that will allow you to choose a new one.

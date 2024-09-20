@@ -17,8 +17,8 @@ const user = useProperty('security.user')
 
 <template>
     <app-layout>
-        <v-container>
-            <v-row align="center" justify="center" style="height: 100vh">
+        <v-container class="fill-height">
+            <v-row align="center" justify="center">
                 <v-col cols="12" lg="4" md="10" sm="12">
                     <v-card class="pa-3 rounded-lg elevation-8">
                         <v-card-title>

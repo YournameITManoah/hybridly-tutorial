@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { VFormRef } from '~/resources/types/vuetify'
+
 useHead({ title: 'Email Verification' })
 
 const props = defineProps<{
@@ -6,21 +8,33 @@ const props = defineProps<{
 }>()
 
 const form = useForm({
+    url: route('verification.send'),
     fields: [],
 })
 
 const verificationLinkSent = computed(
     () => props.status === 'verification-link-sent',
 )
+
+const formRef = ref<VFormRef | null>(null)
+const submit = async () => {
+    const result = await formRef.value?.validate()
+    if (!result?.valid) return
+    form.submit()
+}
 </script>
 
 <template layout="guest">
     <div>
         <v-card-title>Email Verification</v-card-title>
-        <v-form :disabled="form.processing" @submit.prevent="form.submit">
+        <v-form
+            ref="formRef"
+            :disabled="form.processing"
+            @submit.prevent="submit"
+        >
             <div class="text-subtitle-2 text-medium-emphasis mb-4">
                 Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we we just emailed to
+                your email address by clicking on the link we just emailed to
                 you? If you didn't receive the email, we will gladly send you
                 another.
             </div>
@@ -28,18 +42,15 @@ const verificationLinkSent = computed(
                 A new verification link has been sent to the email address you
                 provided during registration.
             </v-alert>
-            <div class="d-flex justify-space-between align-center">
+            <v-card-actions>
                 <v-btn :loading="form.processing" color="primary" type="submit">
                     Resend Verification Email
                 </v-btn>
-                <router-link
-                    :href="route('logout')"
-                    class="text-black"
-                    method="post"
-                >
-                    Log Out
+                <v-spacer />
+                <router-link :href="route('logout')" as="div" method="post">
+                    <v-btn color="error">Log Out</v-btn>
                 </router-link>
-            </div>
+            </v-card-actions>
         </v-form>
     </div>
 </template>

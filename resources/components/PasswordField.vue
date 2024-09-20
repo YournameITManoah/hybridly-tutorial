@@ -5,11 +5,13 @@ withDefaults(
         label?: string
         icon?: string
         errors?: string
+        required?: boolean
     }>(),
     {
         label: 'Password',
         icon: 'mdi-lock-outline',
         errors: undefined,
+        required: true,
     },
 )
 
@@ -25,6 +27,7 @@ const showPassword = ref(false)
         :error-messages="errors"
         :label="label"
         :prepend-inner-icon="icon"
+        :rules="required ? [isRequired] : []"
         :type="showPassword ? 'text' : 'password'"
         @click:append-inner="showPassword = !showPassword"
     />
