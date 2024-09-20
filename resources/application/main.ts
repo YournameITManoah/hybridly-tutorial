@@ -1,7 +1,7 @@
 import { initializeHybridly } from 'virtual:hybridly/config'
 import { createHead } from '@unhead/vue'
 import i18n from './i18n'
-import './tailwind.css'
+import vuetify from './vuetify'
 
 initializeHybridly({
     enhanceVue: (vue) => {
@@ -12,5 +12,6 @@ initializeHybridly({
         })
         vue.use(i18n)
         vue.use(head)
+        vue.use(vuetify)
     },
 })
