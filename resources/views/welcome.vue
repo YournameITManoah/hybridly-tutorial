@@ -1,11 +1,13 @@
 <script setup lang="ts">
-useHead({
-    title: "Welcome",
-});
+defineOptions({
+    name: 'WelcomePage',
+})
 
-const props = defineProps<{
-    user: App.Data.UserData;
-}>();
+useHead({
+    title: 'Welcome',
+})
+
+const user = useProperty('security.user')
 </script>
 
 <template layout>
@@ -62,7 +64,7 @@ const props = defineProps<{
                         class="title font-bold bg-clip-text text-center text-6xl text-transparent leading-normal"
                     >
                         Hybridly,
-                        {{ user.name }}
+                        {{ user?.name }}
                     </span>
                 </div>
             </div>
