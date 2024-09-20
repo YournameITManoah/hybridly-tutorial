@@ -61,7 +61,7 @@ class TimeLogForm
                     ->live()
                     ->required(),
                 Forms\Components\Select::make('project_id')
-                    ->options(fn (Forms\Get $get): Collection => Project::query()
+                    ->options(fn(Forms\Get $get): Collection => Project::query()
                         ->whereHas('users', function (Builder $query) use ($get) {
                             $query->where('user_id', $get('user_id'));
                         })
