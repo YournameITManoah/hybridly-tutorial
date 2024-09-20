@@ -19,7 +19,8 @@ class UserPolicy
         return null;
     }
 
-    public function viewAdmin(User $user) : bool{
+    public function viewAdmin(User $user): bool
+    {
         return true;
     }
 

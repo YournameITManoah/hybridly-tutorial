@@ -60,15 +60,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('my')
-                    ->label(fn(): string => MyProjects::getNavigationLabel())
+                    ->label(fn (): string => MyProjects::getNavigationLabel())
                     ->icon('heroicon-o-rectangle-stack')
-                    ->url(fn(): string => MyProjects::getUrl())
-                    ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.projects.my')),
+                    ->url(fn (): string => MyProjects::getUrl())
+                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.resources.projects.my')),
                 NavigationItem::make('my')
-                    ->label(fn(): string => MyTimeLogs::getNavigationLabel())
+                    ->label(fn (): string => MyTimeLogs::getNavigationLabel())
                     ->icon('heroicon-o-clock')
-                    ->url(fn(): string => MyTimeLogs::getUrl())
-                    ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.time-logs.my'))
+                    ->url(fn (): string => MyTimeLogs::getUrl())
+                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.resources.time-logs.my'))
             ]);
     }
 }

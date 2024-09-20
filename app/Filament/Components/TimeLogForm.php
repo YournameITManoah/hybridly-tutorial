@@ -2,7 +2,6 @@
 
 namespace App\Filament\Components;
 
-
 use App\Models\Project;
 use App\TimeLogFormType;
 use Filament\Forms;
@@ -46,7 +45,7 @@ class TimeLogForm
                     ->label('Project')
                     ->disabled()
             ], $default);
-        }  elseif ($type === TimeLogFormType::USER) {
+        } elseif ($type === TimeLogFormType::USER) {
             return array_merge([
                 Forms\Components\Select::make('project_id')
                     ->label('Project')
