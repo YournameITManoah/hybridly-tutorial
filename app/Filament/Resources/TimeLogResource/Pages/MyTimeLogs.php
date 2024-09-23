@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TimeLogResource\Pages;
 
+use App\Filament\Exports\TimeLogExporter;
 use App\Filament\Resources\TimeLogResource;
 use App\Models\TimeLog;
 use App\Filament\Components\TimeLogForm;
@@ -11,6 +12,7 @@ use Filament\Resources\Pages\ManageRecords;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportAction;
 use Illuminate\Database\Eloquent\Builder;
 
 class MyTimeLogs extends ManageRecords
@@ -31,7 +33,11 @@ class MyTimeLogs extends ManageRecords
         return TimeLogResource::table($table)
             ->modifyQueryUsing(fn(Builder $query) => $query->whereHas('user', function (Builder $query) {
                 $query->where('user_id', auth()->id());
-            }));
+            }))
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(TimeLogExporter::class)
+            ]);
     }
 
     public static function canAccess(array $parameters = []): bool
