@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
 use App\Filament\Components\TimeLogForm;
+use App\Filament\Resources\TimeLogResource;
 use App\Rules\Timeframe;
 use App\TimeLogFormType;
 use Carbon\Carbon;
@@ -29,41 +30,9 @@ class TimeLogsRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        return $table
-            ->recordTitleAttribute('id')
-            ->columns([
-                Tables\Columns\TextColumn::make('project.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('start_time')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('stop_time')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('duration'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
+        return TimeLogResource::table($table)
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }

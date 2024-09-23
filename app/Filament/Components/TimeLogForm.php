@@ -2,6 +2,7 @@
 
 namespace App\Filament\Components;
 
+use Closure;
 use App\Models\Project;
 use App\TimeLogFormType;
 use Filament\Forms;
@@ -58,8 +59,19 @@ class TimeLogForm
             return array_merge([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
+                    ->default(auth()->user()->id)
                     ->live()
-                    ->required(),
+                    ->required()
+                    ->disabled(! auth()->user()->isAdmin())
+                    ->dehydrated(! auth()->user()->isAdmin())
+                    ->rules([
+                        fn(): Closure => function (string $attribute, $value, Closure $fail) {
+                            if (auth()->user()->isAdmin()) return;
+                            if ($value !== auth()->user()->id) {
+                                $fail('The :attribute is invalid.');
+                            }
+                        },
+                    ]),
                 Forms\Components\Select::make('project_id')
                     ->options(fn(Forms\Get $get): Collection => Project::query()
                         ->whereHas('users', function (Builder $query) use ($get) {

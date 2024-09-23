@@ -36,6 +36,11 @@ class TimeLog extends Model
         'stop_time' => 'datetime',
     ];
 
+    public function getDurationAttribute()
+    {
+        return $this->start_time->diff($this->stop_time);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

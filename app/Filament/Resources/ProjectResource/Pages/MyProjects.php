@@ -17,36 +17,12 @@ class MyProjects extends ListRecords
 
     public function table(Table $table): Table
     {
-        return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('users', function (Builder $query) {
+        return ProjectResource::table($table)
+            ->modifyQueryUsing(fn(Builder $query) => $query->whereHas('users', function (Builder $query) {
                 $query->where('user_id', auth()->id());
             }))
-            ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('client.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('max_hours')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                //
-            ])
-            ->bulkActions([
-                //
-            ]);
+            ->actions([])
+            ->bulkActions([]);
     }
 
     public static function canAccess(array $parameters = []): bool

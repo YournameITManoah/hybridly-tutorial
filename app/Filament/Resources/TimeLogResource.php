@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Components\TimeLogForm;
 use App\Filament\Resources\TimeLogResource\Pages;
-use App\Filament\Resources\TimeLogResource\RelationManagers;
+use App\Filament\Resources\ProjectResource\RelationManagers\TimeLogsRelationManager as ProjectTimeLogsRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\TimeLogsRelationManager as UserTimeLogsRelationManager;
+use App\Filament\Resources\TimeLogResource\Pages\MyTimeLogs;
 use App\Models\Project;
 use App\Models\TimeLog;
 use App\Rules\Timeframe;
@@ -38,11 +40,17 @@ class TimeLogResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->sortable(),
+                    ->sortable()
+                    ->hiddenOn([
+                        UserTimeLogsRelationManager::class,
+                        MyTimeLogs::class,
+                    ]),
                 Tables\Columns\TextColumn::make('project.name')
-                    ->sortable(),
+                    ->sortable()
+                    ->hiddenOn(ProjectTimeLogsRelationManager::class),
                 Tables\Columns\TextColumn::make('start_time')
                     ->dateTime()
                     ->sortable(),
@@ -64,11 +72,10 @@ class TimeLogResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 

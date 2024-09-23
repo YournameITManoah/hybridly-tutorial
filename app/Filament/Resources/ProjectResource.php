@@ -6,6 +6,7 @@ use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Filament\Resources\ProjectResource\RelationManagers\TimeLogsRelationManager;
 use App\Filament\Resources\ProjectResource\RelationManagers\UsersRelationManager;
+use App\Filament\Resources\ClientResource\RelationManagers\ProjectsRelationManager as ClientProjectsRelationManager;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -33,7 +34,8 @@ class ProjectResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('client_id')
                     ->relationship('client', 'name')
-                    ->required(),
+                    ->required()
+                    ->hiddenOn(ClientProjectsRelationManager::class),
                 Forms\Components\TextInput::make('max_hours')
                     ->numeric()
                     ->default(null),
@@ -43,11 +45,13 @@ class ProjectResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('client.name')
-                    ->sortable(),
+                    ->sortable()
+                    ->hiddenOn(ClientProjectsRelationManager::class),
                 Tables\Columns\TextColumn::make('max_hours')
                     ->numeric()
                     ->sortable(),
@@ -65,6 +69,7 @@ class ProjectResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -95,6 +100,4 @@ class ProjectResource extends Resource
     {
         return auth()->user()->isAdmin();
     }
-
-
 }

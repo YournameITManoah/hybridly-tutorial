@@ -3,21 +3,33 @@
 namespace App\Filament\Resources\TimeLogResource\Pages;
 
 use App\Filament\Resources\TimeLogResource;
+use App\Models\TimeLog;
+use App\Filament\Components\TimeLogForm;
+use App\TimeLogFormType;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\ManageRecords;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 
-class MyTimeLogs extends ListRecords
+class MyTimeLogs extends ManageRecords
 {
     protected static string $resource = TimeLogResource::class;
     protected static ?string $title = 'My Time Logs';
     protected static ?string $breadcrumb = 'My';
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make()
+        ];
+    }
+
     public function table(Table $table): Table
     {
-        return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('user', function (Builder $query) {
+        return TimeLogResource::table($table)
+            ->modifyQueryUsing(fn(Builder $query) => $query->whereHas('user', function (Builder $query) {
                 $query->where('user_id', auth()->id());
             }));
     }
