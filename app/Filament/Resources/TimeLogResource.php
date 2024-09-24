@@ -26,6 +26,7 @@ class TimeLogResource extends Resource
 {
     protected static ?string $model = TimeLog::class;
 
+    protected static ?int $navigationSort = 0;
     protected static ?string $navigationIcon = 'heroicon-o-clock';
     protected static ?string $navigationGroup = 'Admin';
 

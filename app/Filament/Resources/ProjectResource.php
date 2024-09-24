@@ -21,6 +21,8 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Admin';
 
@@ -94,6 +96,11 @@ class ProjectResource extends Resource
             'edit' => Pages\EditProject::route('/{record}/edit'),
             'my' => Pages\MyProjects::route('/my'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 
     public static function shouldRegisterNavigation(): bool

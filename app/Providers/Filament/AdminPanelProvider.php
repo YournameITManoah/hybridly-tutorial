@@ -4,6 +4,8 @@ namespace App\Providers\Filament;
 
 use App\Filament\Resources\ProjectResource\Pages\MyProjects;
 use App\Filament\Resources\TimeLogResource\Pages\MyTimeLogs;
+use App\Filament\Resources\TimeLogResource\Widgets\TimeLogsChart;
+use App\Models\Project;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -13,6 +15,7 @@ use Filament\Navigation\NavigationItem;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -42,6 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                //TimeLogsChart::class,
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
@@ -60,12 +64,15 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->navigationItems([
-                NavigationItem::make('my')
+                NavigationItem::make()
                     ->label(fn(): string => MyProjects::getNavigationLabel())
                     ->icon('heroicon-o-rectangle-stack')
                     ->url(fn(): string => MyProjects::getUrl())
-                    ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.projects.my')),
-                NavigationItem::make('my')
+                    ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.projects.my'))
+                    ->badge(fn() => Project::query()->whereHas('users', function (Builder $query) {
+                        $query->where('user_id', auth()->id());
+                    })->count()),
+                NavigationItem::make()
                     ->label(fn(): string => MyTimeLogs::getNavigationLabel())
                     ->icon('heroicon-o-clock')
                     ->url(fn(): string => MyTimeLogs::getUrl())
