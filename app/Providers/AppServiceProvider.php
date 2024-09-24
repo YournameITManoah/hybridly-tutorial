@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Filament\Tables\Table;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -36,5 +37,9 @@ class AppServiceProvider extends ServiceProvider
             'user' => User::class,
         ]);
         Date::use(CarbonImmutable::class);
+
+        Table::configureUsing(function (Table $table): void {
+            $table->deferLoading()->extremePaginationLinks();
+        });
     }
 }
