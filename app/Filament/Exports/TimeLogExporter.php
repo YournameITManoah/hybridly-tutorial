@@ -20,6 +20,7 @@ class TimeLogExporter extends Exporter
             ExportColumn::make('project.name'),
             ExportColumn::make('start_time'),
             ExportColumn::make('stop_time'),
+            // TODO: duration field
             ExportColumn::make('description'),
             ExportColumn::make('created_at'),
             ExportColumn::make('updated_at'),

@@ -14,6 +14,7 @@ class TimeLogsChart extends ChartWidget
 
     protected function getData(): array
     {
+        // TODO": ask chatgpt to fix this
         $data = Trend::query(TimeLog::query()->selectRaw('TIMESTAMPDIFF(second, start_time, stop_time) AS `duration`'))
             ->dateColumn('start_time')
             ->between(
