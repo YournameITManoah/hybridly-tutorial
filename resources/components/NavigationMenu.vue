@@ -16,6 +16,11 @@ const navigation = computed((): NavItem[] => {
             icon: 'mdi-view-dashboard',
             href: route('dashboard'),
         },
+        {
+            title: 'Time Logs',
+            icon: 'mdi-clock-outline',
+            href: route('time-log.index'),
+        },
     ]
 
     if (can.value?.['view-admin']) {

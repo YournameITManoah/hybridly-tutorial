@@ -7,6 +7,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return hybridly('Dashboard');
+        return hybridly('dashboard');
     }
 }

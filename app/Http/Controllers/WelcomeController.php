@@ -9,7 +9,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        return hybridly('Welcome', [
+        return hybridly('welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,

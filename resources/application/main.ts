@@ -2,6 +2,7 @@ import { initializeHybridly } from 'virtual:hybridly/config'
 import { createHead } from '@unhead/vue'
 import i18n from './i18n'
 import vuetify from './vuetify'
+import './axios'
 import '@/assets/css/main.scss'
 
 initializeHybridly({
