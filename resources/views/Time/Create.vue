@@ -5,6 +5,8 @@ defineOptions({ name: 'TimeLogCreate' })
 
 useHead({ title: 'Create Time Log' })
 
+const today = new Date().toISOString()
+
 const breadcrumbs = [
     {
         title: 'Dashboard',
@@ -87,6 +89,7 @@ const submit = async () => {
                                     prepend-icon="mdi-cards-variant"
                                     item-title="name"
                                     item-value="id"
+                                    :rules="[isRequired]"
                                     required
                                 />
                             </v-col>
@@ -94,7 +97,9 @@ const submit = async () => {
                                 <v-date-input
                                     v-model="form.fields.date"
                                     label="Date"
+                                    :max="today"
                                     :rules="[isRequired]"
+                                    :disabled="form.processing"
                                     :error-messages="form.errors.date"
                                     required
                                 />

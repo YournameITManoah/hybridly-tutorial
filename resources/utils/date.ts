@@ -22,13 +22,12 @@ export const formatTime = (time: string) => {
 }
 
 export const formatDuration = (start: string, stop: string) => {
-    const adapter = useDate()
     const date1 = parseTime(start)
     const date2 = parseTime(stop)
 
     if (!date1 || !date2) return 'xx:xx'
 
-    let duration = adapter.getDiff(date2, date1, 'minutes')
+    let duration = useDate().getDiff(date2, date1, 'minutes')
     const h = Math.floor(duration / 60)
     duration %= 60
     const m = Math.floor(duration)

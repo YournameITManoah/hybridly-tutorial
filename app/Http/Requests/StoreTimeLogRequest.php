@@ -23,7 +23,7 @@ class StoreTimeLogRequest extends FormRequest
             })],
             'date' => ['required', 'date', 'before_or_equal:now'],
             'start_time' => ['required'],
-            'stop_time' => ['required'],
+            'stop_time' => ['required', 'after:start_time'],
             'description' => ['required', 'string', 'max:255'],
         ];
     }

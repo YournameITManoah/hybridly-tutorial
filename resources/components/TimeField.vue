@@ -13,7 +13,7 @@
             activator="parent"
             transition="scale-transition"
         >
-            <v-time-picker v-if="menu" v-model="model" full-width />
+            <v-time-picker v-if="menu" v-model="model" format="24hr" />
         </v-menu>
     </v-text-field>
 </template>
