@@ -19,20 +19,22 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->has(Project::factory(5))
+            ->has(TimeLog::factory(5))
             ->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('admin'),
-            'role_id' => Role::ADMIN
-        ]);
+                'name' => 'Admin',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('admin'),
+                'role_id' => Role::ADMIN
+            ]);
 
         User::factory()
             ->has(Project::factory(5))
+            ->has(TimeLog::factory(5))
             ->create([
-            'name' => 'User',
-            'email' => 'user@example.com',
-            'password' => Hash::make('user'),
-            'role_id' => Role::USER,
-        ]);
+                'name' => 'User',
+                'email' => 'user@example.com',
+                'password' => Hash::make('user'),
+                'role_id' => Role::USER,
+            ]);
     }
 }

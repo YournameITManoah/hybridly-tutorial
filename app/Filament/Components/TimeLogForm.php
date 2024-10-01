@@ -16,19 +16,16 @@ class TimeLogForm
     public static function schema(TimeLogFormType $type = TimeLogFormType::DEFAULT): array
     {
         $default = [
-            Forms\Components\DateTimePicker::make('start_time')
+            Forms\Components\DatePicker::make('date')
                 ->required()
-                ->maxDate(now())
-                ->before('stop_time'),
-            Forms\Components\DateTimePicker::make('stop_time')
+                ->maxDate(now()),
+            Forms\Components\TimePicker::make('start_time')
                 ->required()
-                ->maxDate(now())
-                ->after('start_time')
-                ->rules([
-                    function (Forms\Get $get) {
-                        return new Timeframe($get('start_time'));
-                    }
-                ]),
+                ->seconds(false),
+            Forms\Components\TimePicker::make('stop_time')
+                ->required()
+                ->seconds(false)
+                ->after('start_time'),
             Forms\Components\Textarea::make('description')
                 ->required()
                 ->columnSpanFull(),
@@ -59,7 +56,7 @@ class TimeLogForm
             return array_merge([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->default(auth()->user()->id)
+                    ->default(auth()->id())
                     ->live()
                     ->required()
                     ->disabled(! auth()->user()->isAdmin())
@@ -67,7 +64,7 @@ class TimeLogForm
                     ->rules([
                         fn(): Closure => function (string $attribute, $value, Closure $fail) {
                             if (auth()->user()->isAdmin()) return;
-                            if ($value !== auth()->user()->id) {
+                            if ($value !== auth()->id()) {
                                 $fail('The :attribute is invalid.');
                             }
                         },

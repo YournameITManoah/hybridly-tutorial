@@ -47,28 +47,29 @@ const user = useProperty('auth.user')
                         </v-card-text>
                         <v-card-actions>
                             <template v-if="user">
-                                <router-link
-                                    :href="route('dashboard')"
-                                    as="div"
-                                >
-                                    <v-btn color="primary">Dashboard</v-btn>
+                                <router-link :href="route('dashboard')">
+                                    <v-btn tabindex="-1" color="primary">
+                                        Dashboard
+                                    </v-btn>
                                 </router-link>
                             </template>
                             <template v-else>
                                 <router-link
                                     v-if="canLogin"
                                     :href="route('login')"
-                                    as="div"
                                     class="mr-2"
                                 >
-                                    <v-btn color="primary">Login</v-btn>
+                                    <v-btn tabindex="-1" color="primary">
+                                        Login
+                                    </v-btn>
                                 </router-link>
                                 <router-link
                                     v-if="canRegister"
                                     :href="route('register')"
-                                    as="div"
                                 >
-                                    <v-btn color="secondary">Sign Up</v-btn>
+                                    <v-btn tabindex="-1" color="secondary">
+                                        Sign Up
+                                    </v-btn>
                                 </router-link>
                             </template>
                         </v-card-actions>

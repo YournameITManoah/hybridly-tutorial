@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTimeLogRequest;
 
 class TimeLogController extends Controller
 {
@@ -25,10 +26,16 @@ class TimeLogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTimeLogRequest $request)
     {
-        $message = sprintf('Successfully created Time Log');
-        return redirect()->back()->with('success', $message);
+        // Retrieve the validated input data
+        $validated = $request->validated();
+
+        // Store the time log
+        Logger('Create time log', $validated);
+
+        // Redirect to overview
+        return redirect()->route('time-log.index');
     }
 
     /**

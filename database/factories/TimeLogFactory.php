@@ -23,13 +23,14 @@ class TimeLogFactory extends Factory
     public function definition(): array
     {
         $start = $this->faker->dateTimeBetween('-1 years');
-        $end = $this->faker->dateTimeBetween($start, $start->format('Y-m-d H:i:s').' +8 hours');
+        $end = $this->faker->dateTimeBetween($start, $start->format('Y-m-d H:i:s') . ' +8 hours');
 
         return [
             'user_id' => User::factory(),
             'project_id' => Project::factory(),
-            'start_time' => $start,
-            'stop_time' => $end,
+            'date' => $start->format('Y-m-d'),
+            'start_time' => $start->format('H:i'),
+            'stop_time' => $end->format('H:i'),
             'description' => $this->faker->text(),
         ];
     }

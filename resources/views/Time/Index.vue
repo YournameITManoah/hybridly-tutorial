@@ -1,9 +1,20 @@
 <script lang="ts" setup>
+import type {
+    PagedParams,
+    PagedResult,
+    TimeLogWithProject,
+    VDataTableOptions,
+} from '~/resources/types'
+
 defineOptions({ name: 'TimeLogIndex' })
 
 useHead({ title: 'Time Logs' })
 
 const breadcrumbs = [
+    {
+        title: 'Dashboard',
+        href: route('dashboard'),
+    },
     {
         title: 'Time Logs',
         href: route('time-log.index'),
@@ -11,25 +22,31 @@ const breadcrumbs = [
     },
 ]
 
-const headers = [
-    { title: 'Project', key: 'project.name' },
-    { title: 'Start Time', key: 'start_time' },
-    { title: 'Stop Time', key: 'stop_time' },
-]
+const groupBy = ref<any>([])
+const headers = computed(() => {
+    return [
+        { title: 'Project', key: 'project.name' },
+        { title: 'Date', key: 'date' },
+        { title: 'Start Time', key: 'start_time' },
+        { title: 'Stop Time', key: 'stop_time' },
+        { title: 'Duration', key: 'duration', sortable: false },
+    ].filter((h) => h.key !== groupBy.value[0]?.key)
+})
 
-const items = ref([])
+const items = ref<TimeLogWithProject[]>([])
 const totalItems = ref(0)
 const isLoadingTable = ref(false)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const options = ref<any>({})
 const search = ref<string | undefined>()
 
-const loadItems = async () => {
+const loadItems = async ({
+    page,
+    itemsPerPage,
+    sortBy,
+    search,
+}: VDataTableOptions) => {
     isLoadingTable.value = true
-    const { page, itemsPerPage, sortBy, search } = options.value
-    const params = {
+    const params: PagedParams = {
         page,
-        search: undefined,
         limit: itemsPerPage,
         sort: sortBy[0],
     }
@@ -37,14 +54,15 @@ const loadItems = async () => {
     if (search) params.search = search
 
     try {
-        const result = await window.axios('/api/time-log', {
-            params,
-        })
+        const result = await window.axios<PagedResult<TimeLogWithProject>>(
+            '/api/time-log/my',
+            { params },
+        )
         items.value = result.data.data
         totalItems.value = result.data.total
-        isLoadingTable.value = false
     } catch (e) {
         console.error(e)
+    } finally {
         isLoadingTable.value = false
     }
 }
@@ -59,14 +77,27 @@ const loadItems = async () => {
         <v-card>
             <v-card-text>
                 <v-data-table-server
-                    v-model:options="options"
+                    v-model:group-by="groupBy"
                     :headers="headers"
                     :items="items"
                     :items-length="totalItems"
                     :loading="isLoadingTable"
                     :search="search"
                     @update:options="loadItems"
-                ></v-data-table-server>
+                >
+                    <template #item.date="{ value }">
+                        {{ formatDate(value) }}
+                    </template>
+                    <template #item.start_time="{ value }">
+                        {{ formatTime(value) }}
+                    </template>
+                    <template #item.stop_time="{ value }">
+                        {{ formatTime(value) }}
+                    </template>
+                    <template #item.duration="{ item }">
+                        {{ formatDuration(item.start_time, item.stop_time) }}
+                    </template>
+                </v-data-table-server>
             </v-card-text>
         </v-card>
     </div>

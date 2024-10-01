@@ -34,5 +34,9 @@
         "vue-tsc": "^2.1.6",
         "vuetify": "^3.7.2",
         "vuetify-sonner": "^0.3.19"
+    },
+    "dependencies": {
+        "@date-io/date-fns": "^3.0.0",
+        "date-fns": "^3.6.0"
     }
 }

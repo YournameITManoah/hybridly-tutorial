@@ -14,7 +14,7 @@ defineProps<{
 
 <template>
     <v-breadcrumbs :items="items">
-        <template #title="{ item }">
+        <template #item="{ item }">
             <router-link
                 v-if="!item.disabled"
                 :href="item.href"

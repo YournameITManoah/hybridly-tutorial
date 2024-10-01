@@ -52,11 +52,14 @@ class TimeLogResource extends Resource
                 Tables\Columns\TextColumn::make('project.name')
                     ->sortable()
                     ->hiddenOn(ProjectTimeLogsRelationManager::class),
+                Tables\Columns\TextColumn::make('date')
+                    ->date()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('start_time')
-                    ->dateTime()
+                    ->time('h:i')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stop_time')
-                    ->dateTime()
+                    ->time('H:i')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('duration'),
                 Tables\Columns\TextColumn::make('created_at')

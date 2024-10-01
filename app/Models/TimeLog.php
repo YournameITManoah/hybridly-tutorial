@@ -18,6 +18,7 @@ class TimeLog extends Model
     protected $fillable = [
         'user_id',
         'project_id',
+        'date',
         'start_time',
         'stop_time',
         'description',
@@ -32,13 +33,12 @@ class TimeLog extends Model
         'id' => 'integer',
         'user_id' => 'integer',
         'project_id' => 'integer',
-        'start_time' => 'datetime',
-        'stop_time' => 'datetime',
+        'date' => 'date',
     ];
 
     public function getDurationAttribute()
     {
-        return $this->start_time->diff($this->stop_time);
+        return 0;
     }
 
     public function user(): BelongsTo

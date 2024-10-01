@@ -1,3 +1,5 @@
+import type DateFnsAdapter from '@date-io/date-fns'
+
 interface VFormRefError {
     id: string | number
     errorMessages: string[]
@@ -24,4 +26,19 @@ export interface VFormRef {
         valid: boolean
         errors: VFormRefError[]
     }>
+}
+
+export interface VDataTableOptions {
+    groupBy: never[]
+    itemsPerPage: number
+    page: number
+    search: string | undefined
+    sortBy: { key: string; order: 'asc' | 'desc' }[]
+}
+
+declare module 'vuetify' {
+    namespace DateModule {
+        // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+        interface Adapter extends DateFnsAdapter {}
+    }
 }

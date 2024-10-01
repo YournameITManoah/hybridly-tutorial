@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { VFormRef } from '~/resources/types/vuetify'
+import type { VFormRef } from '~/resources/types'
 
 defineOptions({ name: 'LoginPage' })
 

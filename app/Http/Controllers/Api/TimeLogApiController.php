@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\TimeLog;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class TimeLogApiController extends Controller
@@ -13,13 +14,24 @@ class TimeLogApiController extends Controller
     public function index(Request $request)
     {
         $defaultLimit = 10;
+        $defaultSort = [
+            'key' => 'date',
+            'order' => 'desc'
+        ];
+
+        $perPage = $request->get('limit', $defaultLimit);
+        $sortBy = $request->get('sort', $defaultSort);
+
+        // -1 means fetch all
+        if ($perPage === '-1') {
+            $perPage = '1000';
+        };
+
         $timeLogs = TimeLog::query()
             ->where('user_id', auth()->id())
-            ->when($request->get('sort'), function ($query, $sortBy) {
-                return $query->orderBy($sortBy['key'], $sortBy['order']);
-            })
             ->with('project:id,name')
-            ->paginate($request->get('limit', $defaultLimit));
+            ->orderBy($sortBy['key'], $sortBy['order'])
+            ->paginate($perPage);
 
         return response()->json($timeLogs);
     }

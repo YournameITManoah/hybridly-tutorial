@@ -14,6 +14,7 @@ const breadcrumbs = [
     },
     {
         title: 'Edit',
+        href: route('time-log.edit'),
         disabled: true,
     },
 ]

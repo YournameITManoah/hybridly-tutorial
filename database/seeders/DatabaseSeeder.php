@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         Client::factory(10)
             ->has(
                 Project::factory(3)
-                ->has(User::factory(5))
+                    ->has(User::factory(5))
             )
             ->create();
     }
