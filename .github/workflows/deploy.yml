@@ -88,7 +88,7 @@ jobs:
                   script: |
                       cd app
 
-                      composer install --prefer-dist --no-dev -o
+                      composer install --prefer-dist -o
 
                       php artisan optimize:clear
                       php artisan optimize
