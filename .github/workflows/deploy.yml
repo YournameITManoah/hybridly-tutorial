@@ -87,5 +87,6 @@ jobs:
                   password: ${{ secrets.password }}
                   script: |
                       cd app
-                      php artisan migrate --force
+                      composer install
+                      php artisan migrate:fresh --force
                       php artisan db:seed --force
