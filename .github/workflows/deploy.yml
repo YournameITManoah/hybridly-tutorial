@@ -48,10 +48,18 @@ jobs:
                   exclude: |
                       **/.git*
                       **/.git*/**
+                      **/.hybridly/**
                       **/node_modules/**
                       **/vendor/**
-                      **/.prettier*
-                      **/README.md
+                      ./editorconfig
+                      ./.php-cs-fixer*
+                      ./eslint*
+                      ./.prettier*
+                      ./composer*
+                      ./package*
+                      ./tsconfig.json
+                      ./vite.config.ts
+                      ./README.md
 
             - name: 📂 Sync public folder
               uses: SamKirkland/FTP-Deploy-Action@v4.3.5
