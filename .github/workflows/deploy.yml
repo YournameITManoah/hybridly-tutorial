@@ -15,7 +15,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.2'
+                  php-version: 8.2
                   tools: php-cs-fixer, phpunit
 
             - name: Cache composer dependencies
@@ -51,15 +51,15 @@ jobs:
                       **/.hybridly/**
                       **/node_modules/**
                       **/vendor/**
-                      ./editorconfig
-                      ./.php-cs-fixer*
-                      ./eslint*
-                      ./.prettier*
-                      ./composer*
-                      ./package*
-                      ./tsconfig.json
-                      ./vite.config.ts
-                      ./README.md
+                      .editorconfig
+                      .php-cs-fixer*
+                      eslint*
+                      .prettier*
+                      composer*
+                      package*
+                      tsconfig.json
+                      vite.config.ts
+                      README.md
 
             - name: 📂 Sync public folder
               uses: SamKirkland/FTP-Deploy-Action@v4.3.5
