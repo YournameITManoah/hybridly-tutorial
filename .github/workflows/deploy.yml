@@ -50,6 +50,7 @@ jobs:
                       **/.git*/**
                       **/.hybridly/**
                       **/node_modules/**
+                      **/vendor/**
                       .editorconfig
                       .php-cs-fixer*
                       eslint*
