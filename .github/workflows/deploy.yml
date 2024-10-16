@@ -76,5 +76,16 @@ jobs:
                   server-dir: ./public_html/
                   state-name: .ftp-deploy-public-sync-state.json
                   exclude: |
+                      build/**
                       index.php
-                      build/manifest.json
+
+            - name: 📂 Sync assets folder
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+              with:
+                  server: ${{ secrets.server }}
+                  username: ${{ secrets.username }}
+                  password: ${{ secrets.password }}
+                  local-dir: ./public/build/assets/
+                  server-dir: ./public_html/build/assets/
+                  state-name: .ftp-deploy-assets-sync-state.json
+                  dangerous-clean-slate: true
