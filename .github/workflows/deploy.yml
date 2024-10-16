@@ -78,3 +78,14 @@ jobs:
                   exclude: |
                       index.php
                       build/manifest.json
+
+            - name: Execute SSH commands
+              uses: appleboy/ssh-action@v1.1.0
+              with:
+                  host: ${{ secrets.server }}
+                  username: ${{ secrets.username }}
+                  password: ${{ secrets.password }}
+                  script: |
+                      cd app
+                      php artisan migrate --force
+                      php artisan db:seed
