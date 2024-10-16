@@ -49,18 +49,21 @@ jobs:
                   exclude: |
                       **/.git*
                       **/.git*/**
-                      **/.hybridly/**
                       **/node_modules/**
                       **/vendor/**
+                      .hybridly/**
+                      public/**
+                      tests/**
                       .editorconfig
                       .env*
                       .php-cs-fixer*
                       .prettier*
                       eslint*
                       package*
+                      phpunit.xml
+                      README.md
                       tsconfig.json
                       vite.config.ts
-                      README.md
 
             - name: 📂 Sync public folder
               uses: SamKirkland/FTP-Deploy-Action@v4.3.5
