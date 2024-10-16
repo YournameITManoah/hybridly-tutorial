@@ -34,7 +34,7 @@ jobs:
 
             - name: 🔨 Build Project
               run: |
-                  composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
+                  composer install --no-dev --no-interaction --prefer-dist
                   npm install
                   npm run build
 
