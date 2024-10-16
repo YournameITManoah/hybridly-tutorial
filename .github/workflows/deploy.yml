@@ -77,3 +77,4 @@ jobs:
                   state-name: .ftp-deploy-public-sync-state.json
                   exclude: |
                       index.php
+                      build/manifest.json
