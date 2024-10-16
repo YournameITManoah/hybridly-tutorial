@@ -53,6 +53,7 @@ jobs:
                       **/vendor/**
                       .hybridly/**
                       public/**
+                      !public/build/manifest.json
                       tests/**
                       .editorconfig
                       .env*
