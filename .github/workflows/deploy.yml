@@ -87,6 +87,14 @@ jobs:
                   password: ${{ secrets.password }}
                   script: |
                       cd app
-                      composer install
+
+                      composer install --prefer-dist --no-dev -o
+
+                      php artisan optimize:clear
+                      php artisan optimize
+
+                      php artisan filament:optimize-clear
+                      php artisan filament:optimize
+
                       php artisan migrate:fresh --force
                       php artisan db:seed --force
