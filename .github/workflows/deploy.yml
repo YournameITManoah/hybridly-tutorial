@@ -12,6 +12,17 @@ jobs:
             - name: 🚚 Get latest code
               uses: actions/checkout@v4
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'npm'
+
+            - name: 🔨 Build Project
+              run: |
+                  npm install
+                  npm run build
+
             - name: 📂 Sync files
               uses: SamKirkland/FTP-Deploy-Action@v4.3.5
               with:
@@ -24,3 +35,13 @@ jobs:
                       **/.git*/**
                       **/.prettier*
                       **/README.md
+
+            - name: 📂 Sync public folder
+              uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+              with:
+                  server: ${{ secrets.server }}
+                  username: ${{ secrets.username }}
+                  password: ${{ secrets.password }}
+                  local-dir: ./public/
+                  server-dir: ./public_html/
+                  state-name: .ftp-deploy-public-sync-state.json
