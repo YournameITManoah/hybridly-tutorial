@@ -18,4 +18,9 @@ jobs:
                   server: ${{ secrets.server }}
                   username: ${{ secrets.username }}
                   password: ${{ secrets.password }}
-                  dry-run: true
+                  server-dir: ./app/
+                  exclude: |
+                      **/.git*
+                      **/.git*/**
+                      **/.prettier*
+                      **/README.md
